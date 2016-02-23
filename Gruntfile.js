@@ -59,7 +59,7 @@ module.exports = function(grunt) {
                     'demo/*.js'
                 ],
                 tasks: ['jshint']
-            },
+            }
         },
         karma: {
             plugins: [
@@ -76,10 +76,11 @@ module.exports = function(grunt) {
                 singleRun: false
             }
         },
-        'min': {
-            'dist': {
-                'src': ['dist/unsavedChanges.js'],
-                'dest': 'dist/unsavedChanges.min.js'
+        'uglify' : {
+            'dist' : {
+                files : {
+                    'dist/unsavedChanges.min.js': ['dist/unsavedChanges.js']
+                }
             }
         },
         jshint: {
@@ -117,7 +118,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'jshint',
         'strip:main',
-        'min'
+        'uglify'
     ]);
 
     grunt.registerTask('autotest:e2e', [
