@@ -11,7 +11,7 @@ angular.module('unsavedChanges', ['resettable'])
     // defaults
     var logEnabled = false;
     var useTranslateService = true;
-    var routeEvent = ['$locationChangeStart', '$stateChangeStart'];
+    var routeEvent = ['$stateChangeStart'];
     var navigateMessage = 'You will lose unsaved changes if you leave this page';
     var reloadMessage = 'You will lose unsaved changes if you reload this page';
 
@@ -203,7 +203,7 @@ angular.module('unsavedChanges', ['resettable'])
                     // @todo this could be written a lot cleaner!
                     if (!allFormsClean()) {
                         unsavedWarningsConfig.log("a form is dirty");
-                        if (!confirm(unsavedWarningsConfig.navigateMessage)) {
+                        if (!confirm(unsavedWarningsConfig.navigateMessage.$$state.value)) {
                             unsavedWarningsConfig.log("user wants to cancel leaving");
                             event.preventDefault(); // user clicks cancel, wants to stay on page
                         } else {
