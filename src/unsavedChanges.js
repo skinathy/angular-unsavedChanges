@@ -155,6 +155,7 @@ angular.module('unsavedChanges', ['resettable'])
             if (allForms.length === 0) setup();
             unsavedWarningsConfig.log("Registering form", form);
             allForms.push(form);
+            _this.enabled = true;
         };
 
         this.removeForm = function(form) {
@@ -179,9 +180,17 @@ angular.module('unsavedChanges', ['resettable'])
             $window.onbeforeunload = null;
         }
 
+        this.disable = function(){
+            _this.enabled = false;
+        };
+
+        this.enable = function () {
+            _this.enabled = true;
+        };
+
         // Function called when user tries to close the window
         this.confirmExit = function() {
-            if (!allFormsClean()) return unsavedWarningsConfig.reloadMessage;
+            if (_this.enabled && !allFormsClean()) return unsavedWarningsConfig.reloadMessage;
             $rootScope.$broadcast('resetResettables');
             tearDown();
         };
@@ -201,7 +210,7 @@ angular.module('unsavedChanges', ['resettable'])
                 var removeFn = $rootScope.$on(aEvent, function(event, next, current) {
                     unsavedWarningsConfig.log("user is moving with " + aEvent);
                     // @todo this could be written a lot cleaner!
-                    if (!allFormsClean()) {
+                    if (_this.enabled && !allFormsClean()) {
                         unsavedWarningsConfig.log("a form is dirty");
                         if (!confirm(unsavedWarningsConfig.navigateMessage.$$state.value)) {
                             unsavedWarningsConfig.log("user wants to cancel leaving");
