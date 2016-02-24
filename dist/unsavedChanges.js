@@ -212,7 +212,7 @@ angular.module('unsavedChanges', ['resettable'])
                     // @todo this could be written a lot cleaner!
                     if (_this.enabled && !allFormsClean()) {
                         unsavedWarningsConfig.log("a form is dirty");
-                        if (!confirm(unsavedWarningsConfig.navigateMessage.$$state.value)) {
+                        if (!confirm(unsavedWarningsConfig.navigateMessage)) {
                             unsavedWarningsConfig.log("user wants to cancel leaving");
                             event.preventDefault(); // user clicks cancel, wants to stay on page
                         } else {
